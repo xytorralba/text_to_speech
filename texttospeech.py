@@ -14,6 +14,66 @@ root.configure(background="#827773")
 image_icon=PhotoImage(file="icon.png")
 root.iconphoto(False,image_icon)
 
+#ENABLE COMMAND BUTTONS
+engine=pyttsx3.init()
+
+def speaknow():
+    text=text_area.get(1.0, END)
+    voice=voice_cmb.get()
+    speed=speed_cmb.get()
+    voices=engine.getProperty('voices')
+
+    def setvoice():
+        if (voice=='Male'):
+            engine.setProperty('voice',voices[0].id)
+            engine.say(text)
+            engine.runAndWait()
+        else:
+            engine.setProperty('voice',voices[1].id)
+            engine.say(text)
+            engine.runAndWait()
+    if(text):
+        if(speed =="Fast"):
+            engine.setProperty('rate',250)
+            setvoice()
+        elif(speed=='Normal'):
+            engine.setProperty('rate',150)
+            setvoice()
+        else:
+            engine.setProperty('rate',60)
+            setvoice()
+
+def download():
+    text=text_area.get(1.0, END)
+    voice=voice_cmb.get()
+    speed=speed_cmb.get()
+    voices=engine.getProperty('voices')
+
+    def setvoice():
+        if (voice=='Male'):
+            engine.setProperty('voice',voices[0].id)
+            path=filedialog.askdirectory()
+            os.chdir(path)
+            engine.save_to_file(text,'text.mp3')
+            engine.runAndWait()
+        else:
+            engine.setProperty('voice',voices[1].id)
+            path=filedialog.askdirectory()
+            os.chdir(path)
+            engine.save_to_file(text,'text.mp3')
+            engine.runAndWait()
+    if(text):
+        if(speed =="Fast"):
+            engine.setProperty('rate',250)
+            setvoice()
+        elif(speed=='Normal'):
+            engine.setProperty('rate',150)
+            setvoice()
+        else:
+            engine.setProperty('rate',60)
+            setvoice()
+
+
 #Top Frame
 Top_frame=Frame(root,bg="#8C8C8C",width=900,height=100)
 Top_frame.place(x=0,y=0)
