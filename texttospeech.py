@@ -38,4 +38,11 @@ speed_cmb=Combobox(root,values=['Slow','Normal','Fast'],font="Courier 12",state=
 speed_cmb.place(x=720,y=210)
 speed_cmb.set('Normal')
 
+#BUTTONS
+btn_speak=Button(root,text="   SPEAK 🗣️",width=10,height=2,bg="#ddbdbe",font="Courier 14 bold",command=speaknow)
+btn_speak.place(x=732,y=280)
+
+btn_save=Button(root,text=" SAVE ⬇️",width=10,height=2,bg="#8e9fb6",font="Courier 14 bold",command=download)
+btn_save.place(x=573,y=280)
+
 root.mainloop()
