@@ -4,6 +4,8 @@ from tkinter import filedialog
 from tkinter.ttk import Combobox
 import pyttsx3 
 import os
+from PIL import Image
+import pytesseract
 
 #DESIGN
 root = tk.Tk()
@@ -73,6 +75,23 @@ def download():
             engine.setProperty('rate',60)
             setvoice()
 
+def upload():
+    file_path=filedialog.askopenfilename(
+        filetypes=[("Text Documents", "*.txt"), ("Images", "*.png;*.jpg;*.jpeg;*.bmp")]
+    )
+    if file_path:
+        _, ext = os.path.splitext(file_path)
+        if ext.lower() in [".txt"]:
+            with open(file_path,'r') as file:
+                text=file.read()
+        elif ext.lower() in [".png", ".jpg", ".jpeg", ".bmp"]:
+            image = Image.open(file_path)
+            text = pytesseract.image_to_string(image)
+        else:
+            text = "Unsupported file format!"
+        text_area.delete(1.0, END)
+        text_area.insert(END, text)
+
 
 #Top Frame
 Top_frame=Frame(root,bg="#8C8C8C",width=900,height=100)
@@ -105,7 +124,7 @@ btn_speak.place(x=571,y=280)
 btn_save=Button(root,text=" SAVE ⬇️",width=11,height=1,bg="#8e9fb6",font="Courier 14 bold",command=download)
 btn_save.place(x=728,y=330)
 
-btn_upload=Button(root,text="UPLOAD➕",width=11,height=1,bg="#8e9fb6",font="Courier 14 bold",command=download,)
+btn_upload=Button(root,text="UPLOAD➕",width=11,height=1,bg="#8e9fb6",font="Courier 14 bold",command=upload)
 btn_upload.place(x=568,y=330)
 
 root.mainloop()
