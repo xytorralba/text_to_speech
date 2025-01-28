@@ -5,7 +5,7 @@ from tkinter.ttk import Combobox
 import pyttsx3 
 import os
 from PIL import Image
-import pytesseract
+import easyocr
 
 #DESIGN
 root = tk.Tk()
@@ -85,8 +85,10 @@ def upload():
             with open(file_path,'r') as file:
                 text=file.read()
         elif ext.lower() in [".png", ".jpg", ".jpeg", ".bmp"]:
-            image = Image.open(file_path)
-            text = pytesseract.image_to_string(image)
+            reader=easyocr.Reader(['en'])
+            result=reader.readtext(file_path, detail=0)
+            text=" ".join(result)
+
         else:
             text = "Unsupported file format!"
         text_area.delete(1.0, END)
